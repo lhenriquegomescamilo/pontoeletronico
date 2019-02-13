@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 class PontoeletronicoApplication
 
 fun main(args: Array<String>) {
-	SpringApplication.run(DemoApplication::class.java, *args)
+	SpringApplication.run(PontoeletronicoApplication::class.java, *args)
 }
 
