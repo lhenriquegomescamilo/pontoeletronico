@@ -1,4 +1,4 @@
-package com.pontoeletronico.pontoeletronico
+package com.pontoeletronico
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
