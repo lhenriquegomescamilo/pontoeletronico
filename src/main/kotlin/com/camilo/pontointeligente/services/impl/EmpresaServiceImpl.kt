@@ -5,9 +5,7 @@ import com.camilo.pontointeligente.repositories.EmpresaRepository
 import com.camilo.pontointeligente.services.EmpresaService
 import org.springframework.stereotype.Service
 
-/**
- * Created by marciosouza on 10/14/17.
- */
+
 @Service
 class EmpresaServiceImpl(val empresaRepository: EmpresaRepository) : EmpresaService {
 
