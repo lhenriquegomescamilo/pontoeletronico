@@ -4,6 +4,7 @@ import com.camilo.pontointeligente.documents.Funcionario
 import com.camilo.pontointeligente.enums.PerfilEnum.*
 import com.camilo.pontointeligente.repositories.FuncionarioRepository
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
@@ -29,6 +30,8 @@ class FuncionarioServiceTest {
     private val cpf: String = "21204676097"
 
 
+    @Before
+    @Throws(Exception::class)
     fun setUp() {
         given(funcionarioRepository?.save(any(Funcionario::class.java))).willReturn(funcionario())
         given(funcionarioRepository?.findOne(id)).willReturn(funcionario())
@@ -39,7 +42,25 @@ class FuncionarioServiceTest {
 
     @Test
     fun deve_cadastrar_um_novo_funcionario() {
-        val funcionario = this.funcionarioService?.persistir(funcionario())
+        val funcionario = funcionarioService?.persistir(funcionario())
+        assertNotNull(funcionario)
+    }
+
+    @Test
+    fun deve_buscar_funcionario_pelo_id() {
+        val funcionario = funcionarioService?.buscarPorId(id)
+        assertNotNull(funcionario)
+    }
+
+    @Test
+    fun deve_buscar_funcionario_pelo_cpf() {
+        val funcionario = funcionarioService?.buscarPorCpf(cpf)
+        assertNotNull(funcionario)
+    }
+
+    @Test
+    fun deve_buscar_funcionario_pelo_email() {
+        val funcionario = funcionarioService?.buscarPorEmail(email)
         assertNotNull(funcionario)
     }
 
@@ -54,7 +75,5 @@ class FuncionarioServiceTest {
             10.0f,
             10.0f,
             "1"
-
-
-            )
+    )
 }
