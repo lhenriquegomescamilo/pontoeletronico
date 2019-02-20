@@ -1,6 +1,8 @@
 package com.camilo.pontointeligente.response
 
-data class Response<T> (
-        val erros: ArrayList<String> = arrayListOf(),
+import java.util.*
+
+data class Response<T>(
+        val erros: List<String> = LinkedList(),
         var data: T? = null
 )
