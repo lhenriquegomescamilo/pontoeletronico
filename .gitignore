@@ -24,3 +24,7 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### MONGODB ###
+data/*.*
+data/db/*.*
