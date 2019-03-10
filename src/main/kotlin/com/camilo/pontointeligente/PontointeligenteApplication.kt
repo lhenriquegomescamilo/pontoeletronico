@@ -20,14 +20,16 @@ class PontointeligenteApplication(
         empresaRepository.deleteAll()
         funcionarioRepository.deleteAll()
 
-        val empresa = empresaRepository.save(Empresa("Empresa", "26988388000174"))
+        val empresa = empresaRepository
+                .save(Empresa("Empresa", "26988388000174"))
 
         val funcionario = funcionarioRepository.save(Funcionario(
                 "Funcionario",
                 "funcionario@gmail.com.br",
                 SenhaUtils().gerarBcrypt("123456"),
                 "87281069030",
-                ROLE_USUARIO, empresa.id!!
+                ROLE_USUARIO,
+                empresa.id!!
         ))
 
         val admin = funcionarioRepository.save(Funcionario(
@@ -36,12 +38,12 @@ class PontointeligenteApplication(
                 SenhaUtils().gerarBcrypt("123456"),
                 "87281069030",
                 ROLE_ADMIN,
-                empresa.id!!
+                empresa.id
         ))
 
-        print("Funcionario ID: ${empresa.id}")
-        print("Admin ID: ${funcionario.id}")
-        print("Funcionario ID: ${admin.id}")
+        print("Funcionario ID: ${empresa?.id}")
+        print("Admin ID: ${funcionario?.id}")
+        print("Funcionario ID: ${admin?.id}")
     }
 
 }
