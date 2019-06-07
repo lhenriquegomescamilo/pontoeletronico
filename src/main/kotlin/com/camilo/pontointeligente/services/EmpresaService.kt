@@ -3,7 +3,7 @@ package com.camilo.pontointeligente.services
 import com.camilo.pontointeligente.documents.Empresa
 
 /**
- * Created by marciosouza on 10/14/17.
+ * Created by camilo on 10/14/17.
  */
 interface EmpresaService {
 

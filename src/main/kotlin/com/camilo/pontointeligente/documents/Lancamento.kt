@@ -13,4 +13,8 @@ data class Lancamento (
         val descricao: String? = "",
         val localizacao: String? = "",
         @Id val id: String? = null
-)
+){
+    companion object {
+        val lancamentoNaoEncontrado = "Lancamento nao encontrado"
+    }
+}

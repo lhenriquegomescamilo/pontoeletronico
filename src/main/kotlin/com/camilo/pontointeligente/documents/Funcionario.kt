@@ -16,4 +16,9 @@ data class Funcionario (
         val qtdHorasTrabalhoDia: Float? = 0.0f,
         val qtdHorasAlmoco: Float? = 0.0f,
         @Id val id: String? = null
-)
+){
+    companion object{
+        val funcionarioNaoEncontrado = "Funcionario Id nao encontrado"
+        val funcionarioNaoEncontradoIdInexistente= "Funcionario nao encontrado, ID nao encontrado"
+    }
+}
