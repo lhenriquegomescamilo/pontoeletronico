@@ -55,7 +55,8 @@ class LancamentoServiceTest {
     }
 
     @Test
-    fun deve_buscar_todos_lancamento_por_funcionario_id() {
+    fun
+            deve_buscar_todos_lancamento_por_funcionario_id() {
         val pageLancamentos = lancamentoService?.buscarPorFuncionarioId(ID, PageRequest(1, 10))
         assertNotNull(pageLancamentos)
         assertNotNull(pageLancamentos?.first())
