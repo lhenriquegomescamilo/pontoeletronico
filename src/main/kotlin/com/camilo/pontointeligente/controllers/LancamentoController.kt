@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 import org.springframework.validation.ObjectError
 import org.springframework.web.bind.annotation.*
 import java.util.Objects.isNull
 import java.util.Objects.nonNull
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/lancamentos")
@@ -88,6 +90,39 @@ class LancamentoController(
 
         response.data = lancamentos.map { lancamento -> lancamento.toDto() }
         return ResponseEntity.ok(response)
+
+    }
+
+    @PutMapping(value = "/{id}")
+    fun atualizarPorId(
+            @PathVariable("id") id: String,
+            @Valid
+            @RequestBody
+            lancamentoDto: LancamentoDto,
+            resultBinding: BindingResult
+    ): ResponseEntity<Response<LancamentoDto>> {
+        val response = Response<LancamentoDto>()
+        validarFuncionario(lancamentoDto, resultBinding)
+        if (resultBinding.hasErrors()) {
+            for (error in resultBinding.allErrors) response.erros.add(error.defaultMessage)
+            return ResponseEntity.badRequest().body(response)
+        }
+        response.data = lancamentoService.persistir(lancamentoDto.toEntity()).toDto()
+        return ResponseEntity.ok(response)
+
+    }
+
+    @DeleteMapping(value = "/{id}")
+    fun removerPorId(@PathVariable("id") id: String): ResponseEntity<Response<String>> {
+        val lancamento = lancamentoService.buscarPorId(id)
+        val response = Response<String>()
+        if (isNull(lancamento)) {
+            response.erros.add(Lancamento.lancamentoNaoEncontrado)
+            return ResponseEntity.badRequest().body(response)
+        }
+        lancamentoService.removerPorId(id)
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response)
+
 
     }
 
