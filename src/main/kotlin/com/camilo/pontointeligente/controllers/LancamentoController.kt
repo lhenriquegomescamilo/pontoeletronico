@@ -9,13 +9,13 @@ import com.camilo.pontointeligente.response.Response
 import com.camilo.pontointeligente.services.FuncionarioService
 import com.camilo.pontointeligente.services.LancamentoService
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 import org.springframework.validation.ObjectError
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.Objects.isNull
 import java.util.Objects.nonNull
 
@@ -63,5 +63,32 @@ class LancamentoController(
         }
     }
 
+    @GetMapping(value = "/{id}")
+    fun listarLancamentoPorId(@PathVariable("id") id: String): ResponseEntity<Response<LancamentoDto>> {
+        val response = Response<LancamentoDto>()
+        val lancamento = lancamentoService.buscarPorId(id)
+
+        if (isNull(lancamento)) response.erros.add("Lancamento não encontrado para o id : $id")
+
+        response.data = lancamento?.toDto()
+        return ResponseEntity.ok(response)
+    }
+
+    @GetMapping(value = "/funcionario/{funcionarioId}")
+    fun buscarLancamentosPorFuncionarioId(
+            @PathVariable("funcionarioId") funcionarioId: String,
+            @RequestParam(value = "page", defaultValue = "0") page: Int,
+            @RequestParam(value = "order", defaultValue = "id") order: String,
+            @RequestParam(value = "dir", defaultValue = "DESC") direciton: String
+    ): ResponseEntity<Response<Page<LancamentoDto>>> {
+        val response = Response<Page<LancamentoDto>>()
+        val pageRequest = PageRequest(page, quantidadePorPaginas, Sort.Direction.valueOf(direciton), order)
+        val lancamentos = lancamentoService.buscarPorFuncionarioId(funcionarioId, pageRequest)
+
+
+        response.data = lancamentos.map { lancamento -> lancamento.toDto() }
+        return ResponseEntity.ok(response)
+
+    }
 
 }
